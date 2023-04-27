@@ -33,7 +33,7 @@ jobs:
     #    path: build_${{ matrix.platform }}\bin\Release
 
     - name: Upload release artifacts
-      run: gh release create --latest "YYYY-MM-DD" build_${{ matrix.platform }}\bin\Release\*
+      run: gh release create --latest (Get-Date).ToString('yyyy-MM-dd') (get-item build_${{ matrix.platform }}\bin\Release\*)
       env:
         GH_REPO: ${{ github.repository }}
         GH_TOKEN: ${{ github.token }}
