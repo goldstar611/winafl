@@ -142,7 +142,7 @@ if (${INTELPT})
 
 endif()
 
-if (NOT "${DynamoRIO_DIR}" STREQUAL "")
+if (1)
 
   project(WinAFL)
 
