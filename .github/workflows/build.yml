@@ -47,6 +47,9 @@ jobs:
         Invoke-WebRequest -Uri $download_url -OutFile DynamoRio.zip
         7z x DynamoRio.zip
         mv DynamoRIO-Windows-* DynamoRio-Windows
+
+        REG ADD "HKLM\Software\Kitware\CMake\Packages\DynamoRIO" /v DynamoRIO /t REG_SZ /d "$(Resolve-Path .\DynamoRio-Windows)" /f
+        REG QUERY  "HKLM\Software\Kitware\CMake\Packages\DynamoRIO"
         Write-Output "download_url=$download_url" >> "$env:GITHUB_OUTPUT"
 
     - name: WinAFL 32-bit
