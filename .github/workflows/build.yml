@@ -52,7 +52,7 @@ jobs:
     - name: WinAFL 32-bit
       working-directory: ${{env.build32_dir}}
       run: |
-        cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake) -DINTELPT=1
+        cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake)
         cmake --build . --config Release
         cp ..\*.py .\bin\Release\
         get-item .\bin\Release\*
@@ -61,7 +61,7 @@ jobs:
     - name: WinAFL 32-bit (Drsyms support)
       working-directory: ${{env.build32_drsyms_dir}}
       run: |
-        cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake) -DINTELPT=1 -DUSE_DRSYMS=1
+        cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake) -DUSE_DRSYMS=1
         cmake --build . --config Release
         cp ..\*.py .\bin\Release\
         get-item .\bin\Release\*
@@ -70,7 +70,7 @@ jobs:
     - name: WinAFL 64-bit
       working-directory: ${{env.build64_dir}}
       run: |
-        cmake -G"${{env.visual_studio_ver}}" -A x64 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake) -DINTELPT=1
+        cmake -G"${{env.visual_studio_ver}}" -A x64 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake)
         cmake --build . --config Release
         cp ..\*.py .\bin\Release\
         get-item .\bin\Release\*
@@ -79,7 +79,7 @@ jobs:
     - name: WinAFL 64-bit (Drsyms support)
       working-directory: ${{env.build64_drsyms_dir}}
       run: |
-        cmake -G"${{env.visual_studio_ver}}" -A x64 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake) -DINTELPT=1 -DUSE_DRSYMS=1
+        cmake -G"${{env.visual_studio_ver}}" -A x64 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake) -DUSE_DRSYMS=1
         cmake --build . --config Release
         cp ..\*.py .\bin\Release\
         get-item .\bin\Release\*
