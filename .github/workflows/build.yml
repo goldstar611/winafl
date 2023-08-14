@@ -1,3 +1,5 @@
+
+
 name: Build
 on:
   push:
@@ -47,43 +49,39 @@ jobs:
         Invoke-WebRequest -Uri $download_url -OutFile DynamoRio.zip
         7z x DynamoRio.zip
         mv DynamoRIO-Windows-* DynamoRio-Windows
-
         REG ADD "HKLM\Software\Kitware\CMake\Packages\DynamoRIO" /v DynamoRIO /t REG_SZ /d "$(Resolve-Path .\DynamoRio-Windows)" /f
-        REG QUERY  "HKLM\Software\Kitware\CMake\Packages\DynamoRIO"
+
         Write-Output "download_url=$download_url" >> "$env:GITHUB_OUTPUT"
 
     - name: WinAFL 32-bit
       working-directory: ${{env.build32_dir}}
       run: |
-        cmd /c cmake -DDynamoRIO_DIR=..\DynamoRIO-Windows\cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DINTELPT=1
-        cmd /c cmake --build . --config Release
+        cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=1 -DINTELPT=1
+        cmake --build . --config Release
         cp ..\*.py .\bin\Release\
         7z a ${{env.zip_32}} (get-item .\bin\Release\*)
-
-        (get-item .\bin\Release\*)
-        dir .\bin\Release\winafl.dll
 
     - name: WinAFL 32-bit (Drsyms support)
       working-directory: ${{env.build32_drsyms_dir}}
       run: |
-        cmd /c cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=$(Resolve-Path ..\DynamoRIO-Windows\cmake) -DINTELPT=1 -DUSE_DRSYMS=1
-        cmd /c cmake --build . --config Release
+        cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=1 -DINTELPT=1 -DUSE_DRSYMS=1
+        cmake --build . --config Release
         cp ..\*.py .\bin\Release\
         7z a ${{env.zip_drsyms_32}} (get-item .\bin\Release\*)
       
     - name: WinAFL 64-bit
       working-directory: ${{env.build64_dir}}
       run: |
-        cmd /c cmake -G"${{env.visual_studio_ver}}" -A x64 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=$(Resolve-Path ..\DynamoRIO-Windows\cmake) -DINTELPT=1
-        cmd /c cmake --build . --config Release
+        cmake -G"${{env.visual_studio_ver}}" -A x64 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=1 -DINTELPT=1
+        cmake --build . --config Release
         cp ..\*.py .\bin\Release\
         7z a ${{env.zip_64}} (get-item .\bin\Release\*)
 
     - name: WinAFL 64-bit (Drsyms support)
       working-directory: ${{env.build64_drsyms_dir}}
       run: |
-        cmd /c cmake -G"${{env.visual_studio_ver}}" -A x64 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=$(Resolve-Path ..\DynamoRIO-Windows\cmake) -DINTELPT=1 -DUSE_DRSYMS=1
-        cmd /c cmake --build . --config Release
+        cmake -G"${{env.visual_studio_ver}}" -A x64 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=1 -DINTELPT=1 -DUSE_DRSYMS=1
+        cmake --build . --config Release
         cp ..\*.py .\bin\Release\
         7z a ${{env.zip_drsyms_64}} (get-item .\bin\Release\*)
 
