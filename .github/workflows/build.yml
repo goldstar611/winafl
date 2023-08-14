@@ -47,6 +47,7 @@ jobs:
         Invoke-WebRequest -Uri $download_url -OutFile DynamoRio.zip
         7z x DynamoRio.zip
         mv DynamoRIO-Windows-* DynamoRio-Windows
+        Resolve-Path DynamoRio-Windows
         Write-Output "download_url=$download_url" >> "$env:GITHUB_OUTPUT"
 
     - name: WinAFL 32-bit
