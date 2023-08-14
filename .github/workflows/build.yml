@@ -26,7 +26,7 @@ jobs:
     runs-on: windows-2019
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Add submodules
       run: git submodule update --init --recursive
@@ -55,6 +55,7 @@ jobs:
         cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake) -DINTELPT=1
         cmake --build . --config Release
         cp ..\*.py .\bin\Release\
+        get-item .\bin\Release\*
         7z a ${{env.zip_32}} (get-item .\bin\Release\*)
 
     - name: WinAFL 32-bit (Drsyms support)
@@ -63,6 +64,7 @@ jobs:
         cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake) -DINTELPT=1 -DUSE_DRSYMS=1
         cmake --build . --config Release
         cp ..\*.py .\bin\Release\
+        get-item .\bin\Release\*
         7z a ${{env.zip_drsyms_32}} (get-item .\bin\Release\*)
       
     - name: WinAFL 64-bit
@@ -71,6 +73,7 @@ jobs:
         cmake -G"${{env.visual_studio_ver}}" -A x64 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake) -DINTELPT=1
         cmake --build . --config Release
         cp ..\*.py .\bin\Release\
+        get-item .\bin\Release\*
         7z a ${{env.zip_64}} (get-item .\bin\Release\*)
 
     - name: WinAFL 64-bit (Drsyms support)
@@ -79,6 +82,7 @@ jobs:
         cmake -G"${{env.visual_studio_ver}}" -A x64 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=(Resolve-Path ..\DynamoRIO-Windows\cmake) -DINTELPT=1 -DUSE_DRSYMS=1
         cmake --build . --config Release
         cp ..\*.py .\bin\Release\
+        get-item .\bin\Release\*
         7z a ${{env.zip_drsyms_64}} (get-item .\bin\Release\*)
 
     - name: Upload release artifacts
