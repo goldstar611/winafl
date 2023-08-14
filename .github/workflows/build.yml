@@ -52,7 +52,8 @@ jobs:
     - name: WinAFL 32-bit
       working-directory: ${{env.build32_dir}}
       run: |
-        cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DDynamoRIO_DIR=..\DynamoRIO-Windows\cmake -DINTELPT=1
+        set DynamoRIO_DIR=..\DynamoRIO-Windows\cmake
+        cmake -G"${{env.visual_studio_ver}}" -A Win32 .. -DUSE_COLOR=1 -DINTELPT=1
         cmake --build . --config Release
         cp ..\*.py .\bin\Release\
         7z a ${{env.zip_32}} (get-item .\bin\Release\*)
