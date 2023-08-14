@@ -49,6 +49,11 @@ jobs:
         Invoke-WebRequest -Uri $download_url -OutFile DynamoRio.zip
         7z x DynamoRio.zip
         mv DynamoRIO-Windows-* DynamoRio-Windows
+
+        # WORKAROUND cmake issue `Ignoring extra path from command line`
+        # Set a cmake system package registry key for DynamoRIO
+        # then set -DDynamoRIO_DIR=1 instead of a path
+        # https://cmake.org/cmake/help/v3.0/manual/cmake-packages.7.html#user-package-registry
         REG ADD "HKLM\Software\Kitware\CMake\Packages\DynamoRIO" /v DynamoRIO /t REG_SZ /d "$(Resolve-Path .\DynamoRio-Windows)" /f
 
         Write-Output "download_url=$download_url" >> "$env:GITHUB_OUTPUT"
